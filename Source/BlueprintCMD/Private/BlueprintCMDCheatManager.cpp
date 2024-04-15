@@ -7,6 +7,15 @@ DEFINE_LOG_CATEGORY_STATIC(LogCheatManager, Log, All);
 
 static int32 NumAutoCompletesRegistered = 0;
 
+static FORCEINLINE bool IsArrayEmpty(const TArray<FString>& InArray)
+{
+#if ENGINE_MAJOR_VERSION == 4
+	return InArray.Num() == 0;
+#elif ENGINE_MAJOR_VERSION == 5
+	return InArray.IsEmpty();
+#endif
+}
+
 #if WITH_EDITOR
 static const UEnum* IsEnumProperty(const FProperty* Property)
 {
@@ -89,7 +98,7 @@ TArray<FAutoCompleteCommand> UBlueprintCMDCheatManager::GenerateAutoCompleteComm
 		Category.ParseIntoArray(FuncCategories, TEXT("|"), true);
 
 		// Make sure Cheat is under correct category prefix!
-		if (FuncCategories.IsEmpty() || FuncCategories[0] != CheatCategoryPrefix)
+		if (IsArrayEmpty(FuncCategories) || FuncCategories[0] != CheatCategoryPrefix)
 		{
 			continue;
 		}
@@ -166,7 +175,7 @@ bool UBlueprintCMDCheatManager::ProcessConsoleExec( const TCHAR* Cmd, FOutputDev
 		CommandName.ParseIntoArray(FuncCategories, TEXT("."), false);
 
 		// Make sure Cheat is under correct category prefix!
-		if (!FuncCategories.IsEmpty() && FuncCategories[0] == CheatCategoryPrefix)
+		if (!IsArrayEmpty(FuncCategories) && FuncCategories[0] == CheatCategoryPrefix)
 		{
 			// Cmd will now just be the arguments since we parsed the command name out of it
 			const FString CmdString = FuncCategories.Last() + Cmd;
