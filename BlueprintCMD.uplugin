@@ -2,10 +2,10 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "BlueprintCMD",
-	"Description": "",
+	"FriendlyName": "Blueprint Console Commands",
+	"Description": "Cheat Manager with easy to add blueprint console commands extendable and modular",
 	"Category": "Blueprints",
-	"CreatedBy": "Oleksandr sleepCOW Ozerov",
+	"CreatedBy": "Oleksandr 'sleepCOW' Ozerov",
 	"CreatedByURL": "https://github.com/sleepCOW",
 	"DocsURL": "https://sleepcow.notion.site/Blueprint-Console-Commands-Documentation-93490894f1fa44eca25979681103c5fc",
 	"MarketplaceURL": "",
@@ -16,8 +16,13 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "BlueprintCMD",
+			"Name": "CowCheatManager",
 			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "CowCheatManagerEditor",
+			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}
 	]

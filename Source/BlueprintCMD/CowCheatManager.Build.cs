@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class BlueprintCMD : ModuleRules
+public class CowCheatManager : ModuleRules
 {
-	public BlueprintCMD(ReadOnlyTargetRules Target) : base(Target)
+	public CowCheatManager(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
@@ -25,7 +25,7 @@ public class BlueprintCMD : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
+				"Core"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -38,7 +38,8 @@ public class BlueprintCMD : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"EngineSettings"
+				"EngineSettings",
+				"DeveloperSettings"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

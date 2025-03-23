@@ -1,15 +1,13 @@
-// MIT License
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-class FBlueprintCMDModule : public IModuleInterface
+class FCowCheatManagerEditorModule : public FDefaultGameModuleImpl
 {
 public:
-
-	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+
+	void OnNewCheatManagerCreated(class UBlueprint* InBlueprint);
 };
