@@ -44,14 +44,11 @@ public:
  * - Check whether CheatManagerExtensions being cut correctly in SHIPPED package
  * - When cheat manager class is created automatically make basic setup
  *		Example cheat command
- *		Example cheat event
+ *		Comment block in event graph that say to look at ExampleCheatCommand and how to disable those default functions being created
+ *		Comment block in ExampleCheatCommand that asks to fill description and says the category is all you need and I recommend to rename it to project name it's cool and intuitive
  *		Option to disable those helpers
- *		Add button Create Cheat/Console command that will create function automatically
- * - Rename module and plugin into CowCheatManager
- *		Friendly name - "Blueprint Console Commands"
- *		Description - "Cheat Manager with easy blueprint console commands, easily extendable and modular"
+ * - Add Icon
  * - Check Gameplay Tags are supported as param of command
- * - Add possibility to disable warning for missing description
  * 
  * - Add description of how to use
  *		Write docs on github
@@ -64,12 +61,12 @@ public:
  * Features:
  *
  * - Simple to use blueprint console commands
- *	 Just add a function with a category
+ *		Just add a function with a category
  * - Automatic tooltip generation for function arguments, even ENUM support
  * - Validation of missing function descriptions and incorrect naming
  * - Exposed CheatManagerExtensions to blueprints, see AddCheatManagerExtension and RemoveCheatManagerExtension
  *		Versions AddCheatManagerExtensionClass and RemoveCheatManagerExtensionClass as QoL for easier setup
- * - Works in the editor and in the builds
+ * - Works in the editor and in the builds (Excluding SHIPPING)
  *
  * Nice-to-have #TODO:
  * - When CheatCategoryPrefix is changed automatically rename category in the function and event graph for event commands
