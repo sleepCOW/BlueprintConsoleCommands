@@ -5,6 +5,8 @@
 #include "BlueprintCMD/Public/CowCheatManager.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "Kismet2/KismetEditorUtilities.h"
+#include "Interfaces/IPluginManager.h"
+#include "Styling/SlateStyleRegistry.h"
 
 IMPLEMENT_MODULE(FCowCheatManagerEditorModule, CowCheatManagerEditor);
 
@@ -17,6 +19,16 @@ void FCowCheatManagerEditorModule::StartupModule()
 
 	FKismetEditorUtilities::RegisterOnBlueprintCreatedCallback(this, UCowCheatManagerExtension::StaticClass(),
 				FKismetEditorUtilities::FOnBlueprintCreated::CreateRaw(this, &FCowCheatManagerEditorModule::OnNewCheatManagerCreated));
+
+    CheatManagerStyle = MakeShareable(new FSlateStyleSet(TEXT("BlueprintCMD")));
+	if (const TSharedPtr<IPlugin>& ThisPlugin = IPluginManager::Get().FindPlugin("BlueprintCMD"))
+	{
+		const FString Path = ThisPlugin->GetBaseDir() + TEXT("/Resources");
+
+		CheatManagerStyle->Set("ClassThumbnail.CowCheatManager", new FSlateImageBrush(Path + "/CheatManager_64x.png", FVector2D{64, 64}));
+        CheatManagerStyle->Set("ClassThumbnail.CowCheatManagerExtension", new FSlateImageBrush(Path + "/CheatManager_64x.png", FVector2D{64, 64}));
+		FSlateStyleRegistry::RegisterSlateStyle(*CheatManagerStyle);
+	}
 }
 
 void FCowCheatManagerEditorModule::ShutdownModule()
@@ -24,6 +36,11 @@ void FCowCheatManagerEditorModule::ShutdownModule()
 	FDefaultGameModuleImpl::ShutdownModule();
 	
 	FKismetEditorUtilities::UnregisterAutoBlueprintNodeCreation(this);
+
+    if (CheatManagerStyle)
+    {
+        FSlateStyleRegistry::UnRegisterSlateStyle(*CheatManagerStyle);
+    }
 }
 
 UEdGraphNode_Comment* CreateCommentNode(class UEdGraph* ParentGraph, const FVector2D& Location, const FString& NodeComment, bool bSelectNewNode = false)
@@ -35,6 +52,9 @@ UEdGraphNode_Comment* CreateCommentNode(class UEdGraph* ParentGraph, const FVect
 	
 	UEdGraphNode_Comment* NewNode = FEdGraphSchemaAction_NewNode::SpawnNodeFromTemplate<UEdGraphNode_Comment>(ParentGraph, CommentTemplate, Location, bSelectNewNode);
 	NewNode->NodeComment = NodeComment;
+    NewNode->bCommentBubbleVisible_InDetailsPanel = true;
+    NewNode->bCommentBubbleVisible = true;
+    NewNode->bCommentBubblePinned = true;
 
 	if (!NodeComment.IsEmpty())
 	{
@@ -122,7 +142,7 @@ void FCowCheatManagerEditorModule::OnNewCheatManagerCreated(class UBlueprint* In
 		    "       I highly recommend to rename it to your project name, so it's clear for all your team members that's your cheat commands, project specific\n"
 		    "  2. Function could be under nested Categories, see \"NestedCategoryExample\", it should be used for clarity but you can omit it if you want to.\n"
 		    "       To use nested categories use \"|\", e.x. \"Cheat|Gameplay|Weapons\" it will be translated into \"Cheat.Gameplay.Weapons\" in console\n"
-		    "  3. If your cheat command requires some latent actions like \"Delay\" or any Async node, you should to create an CustomEvent in EventGraph and just call it from your Function\n"
+		    "  3. If your cheat command requires some latent actions like \"Delay\" or any Async node, you should create an CustomEvent in EventGraph and just call it from your Function\n"
 		    "  4. Consider adding \"Description\" for cheat command, it will be displayed in console autocomplete and will help people to understand what your command does\n"
 		    "	    If you hate generated warnings for missing descriptions you can toggle \"bDisableMissingDescriptionWarnings\" in  \"Blueprint Console Commands Settings\"\n"
 		    "  5. You can pass arguments to Commands, just add arguments to the function they will be automatically displayed in autocomplete";

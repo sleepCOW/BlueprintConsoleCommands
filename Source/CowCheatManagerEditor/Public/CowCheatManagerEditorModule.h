@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
+#include "Styling/SlateStyle.h"
 
 class FCowCheatManagerEditorModule : public FDefaultGameModuleImpl
 {
@@ -10,4 +11,7 @@ public:
 	virtual void ShutdownModule() override;
 
 	void OnNewCheatManagerCreated(class UBlueprint* InBlueprint);
+
+private:
+	TSharedPtr<FSlateStyleSet> CheatManagerStyle;
 };

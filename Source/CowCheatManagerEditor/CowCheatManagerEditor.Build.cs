@@ -38,7 +38,9 @@ public class CowCheatManagerEditor : ModuleRules
 				"Engine",
 				"UnrealEd",
 				"CowCheatManager",
-				"BlueprintGraph"
+				"BlueprintGraph",
+                "Projects",
+                "SlateCore"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
