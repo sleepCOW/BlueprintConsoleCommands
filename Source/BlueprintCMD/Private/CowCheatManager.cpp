@@ -106,17 +106,10 @@ TArray<FAutoCompleteCommand> UCowCheatManager::GenerateAutoCompleteCommands(UCla
 		// Make sure Cheat is under correct category prefix!
 		if (!IsFunctionFirstCategoryEqualTo(CheatPrefix, Func))
 		{
-			continue;;
+			continue;
 		}
 		
-		const FString& Category = Func->GetMetaData(TEXT("Category"));
-		TArray<FString> FuncCategories;
-		Category.ParseIntoArray(FuncCategories, TEXT("|"), true);
-
-		// Append to the categories command name
-		// So it will look like "CheatCategoryPrefix.Category.FuncName"
-		FuncCategories.Add(Name.ToString());
-		const FString CommandName = FString::Join(FuncCategories, TEXT("."));
+        const FString CommandName = FormatFunctionNameToConsoleCommand(Func);
 
 		FAutoCompleteCommand Entry;
 
@@ -138,6 +131,20 @@ EDataValidationResult UCowCheatManager::IsDataValid(FDataValidationContext& Cont
 	ValidationResult = CombineDataValidationResults(ValidateCheatFunctions(FunctionNames, GetClass(),Context), ValidationResult);
 		
 	return ValidationResult;
+}
+
+FString UCowCheatManager::FormatFunctionNameToConsoleCommand(const UFunction* Function)
+{
+    check(Function);
+		
+    const FString& Category = Function->GetMetaData(TEXT("Category"));
+    TArray<FString> FuncCategories;
+    Category.ParseIntoArray(FuncCategories, TEXT("|"), true);
+
+    // Append to the categories command name
+    // So it will look like "CategoryA.CategoryB.FuncName"
+    FuncCategories.Add(Function->GetName());
+    return FString::Join(FuncCategories, TEXT("."));
 }
 
 bool UCowCheatManager::IsFunctionFirstCategoryEqualTo(const FString& CategoryToCheck, const UFunction* Function)
@@ -167,33 +174,48 @@ EDataValidationResult UCowCheatManager::ValidateCheatFunctions(const TArray<FNam
 	
 	for (const FName& Name : FunctionNames)
 	{
+        const FString& NameStr = Name.ToString();
+
 		// Check no whitespaces in function names, otherwise it will break function calling
-		if (Name.ToString().Find(" ") != INDEX_NONE)
+		if (NameStr.Find(" ") != INDEX_NONE)
 		{
 			ValidationResult = EDataValidationResult::Invalid;
 			Context.AddError(
 						FText::Format(
 							LOCTEXT("Error_InvalidFunctionName", "Function \"{0}\" contains white spaces, please rename without spaces."),
-							FText::FromString(Name.ToString())
+							FText::FromString(NameStr)
 						)
 					);
 		}
 
-		// Check every exposed cheat function has description for proper tooltip generation
-		if (Settings->ShouldValidateMissingDescription())
+        if (UFunction* Func = OwningClass->FindFunctionByName(Name))
 		{
-			if (UFunction* Func = OwningClass->FindFunctionByName(Name))
+            if (IsFunctionFirstCategoryEqualTo(Settings->CheatCategoryPrefix, Func))
 			{
-				if (IsFunctionFirstCategoryEqualTo(Settings->CheatCategoryPrefix, Func))
+                // Check whether we have a conflict with existing console objects
+                const FString ConsoleCommandStr = UCowCheatManager::FormatFunctionNameToConsoleCommand(Func);
+                if (IConsoleObject* ExistingConsoleObj = IConsoleManager::Get().FindConsoleObject(*ConsoleCommandStr))
+                {
+                    ValidationResult = EDataValidationResult::Invalid;
+                    Context.AddError(
+                                FText::Format(
+                                    LOCTEXT("Error_NameConflict", "Function \"{0}\" conflicts with existing console command \"{1}\"."),
+                                    FText::FromString(NameStr), FText::FromString(IConsoleManager::Get().FindConsoleObjectName(ExistingConsoleObj))
+                                )
+                            );
+                }
+
+                // Check every exposed cheat function has description for proper tooltip generation
+                if (Settings->ShouldValidateMissingDescription())
 				{
-					const FString& CommandDescription = Func->GetMetaData( TEXT("Tooltip") );
+					const FString& CommandDescription = Func->GetMetaData(TEXT("Tooltip"));
 		
 					if (CommandDescription.IsEmpty())
 					{
 						Context.AddWarning(
 							FText::Format(
 								LOCTEXT("Warning_MissingCheatDescription", "Cheat function \"{0}\" has no description! Please consider adding it, for console tooltip!"),
-								FText::FromString(Name.ToString())
+								FText::FromString(NameStr)
 							)
 						);
 					}

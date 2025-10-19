@@ -119,6 +119,9 @@ public:
 	// 2. Verify functions have description for tooltip
 	virtual EDataValidationResult IsDataValid(class FDataValidationContext& Context) const override;
 
+    // Transforms function name into console command by merging function's categories
+	// example "CategoryA.CategoryB.FuncName"
+    static FString FormatFunctionNameToConsoleCommand(const UFunction* Function);
 	static bool IsFunctionFirstCategoryEqualTo(const FString& CategoryToCheck, const UFunction* Function);
 	static EDataValidationResult ValidateCheatFunctions(const TArray<FName>& FunctionNames, const UClass* OwningClass, class FDataValidationContext& Context);
 #endif
