@@ -345,6 +345,7 @@ bool UCowCheatManager::ProcessConsoleExec( const TCHAR* Cmd, FOutputDevice& Ar, 
 	FString CommandName;
 	if (FParse::Token(Cmd, CommandName, true) && CommandName.StartsWith(Settings->CheatCategoryPrefix))
 	{
+        TRACE_CPUPROFILER_EVENT_SCOPE_TEXT(*FString::Printf(TEXT("UCowCheatManager::ProcessConsoleExec %s"), *CommandName));
 		TArray<FString> FuncCategories;
 		CommandName.ParseIntoArray(FuncCategories, TEXT("."), false);
 
