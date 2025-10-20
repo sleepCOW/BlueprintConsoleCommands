@@ -77,25 +77,37 @@ class COWCHEATMANAGER_API UCowCheatManager : public UCheatManager
 {
 	GENERATED_BODY()
 
+    // Cow prefix is used to avoid name conflicts with non-virtual methods of UCheatManager
 public:
 	/** Registers a pre-created cheat manager extension with this cheat manager */
 	UFUNCTION(BlueprintCallable, Category = "Extension", meta = (DisplayName = "Add Cheat Manager Extension"))
-	void BP_AddCheatManagerExtension(UCowCheatManagerExtension* CheatObject);
+	void CowAddCheatManagerExtension(UCowCheatManagerExtension* CheatObject);
 
 	/** Removes a cheat manager extension from this cheat manager */
 	UFUNCTION(BlueprintCallable, Category = "Extension", meta = (DisplayName = "Remove Cheat Manager Extension"))
-	void BP_RemoveCheatManagerExtension(UCowCheatManagerExtension* CheatObject);
+	void CowRemoveCheatManagerExtension(UCowCheatManagerExtension* CheatObject);
 
 	/** Creates and register a cheat manager extension with this cheat manager */
 	UFUNCTION(BlueprintCallable, Category = "Extension", meta = (DisplayName = "Add Cheat Manager Extension Class"))
-	void BP_AddCheatManagerExtensionClass(TSubclassOf<UCowCheatManagerExtension> CheatClass);
+	void AddCheatManagerExtensionClass(TSubclassOf<UCowCheatManagerExtension> CheatClass);
+
+    /** Loads, creates and register a cheat manager extension with this cheat manages */
+	UFUNCTION(BlueprintCallable, Category = "Extension", meta = (DisplayName = "Async Add Cheat Manager Extension Soft Class"))
+	void AsyncAddCheatManagerExtensionSoftClass(TSoftClassPtr<UCowCheatManagerExtension> SoftCheatClass);
+
+    /**
+	 * Removes a cheat manager extension by class from this cheat manager
+	 * @note removes first occurrence
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Extension", meta = (DisplayName = "Remove Cheat Manager Extension Soft Class"))
+	void RemoveCheatManagerExtensionSoftClass(TSoftClassPtr<UCowCheatManagerExtension> CheatClass);
 
 	/**
 	 * Removes a cheat manager extension by class from this cheat manager
 	 * @note removes first occurrence
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Extension", meta = (DisplayName = "Remove Cheat Manager Extension Class"))
-	void BP_RemoveCheatManagerExtensionClass(TSubclassOf<UCowCheatManagerExtension> CheatClass);
+	void RemoveCheatManagerExtensionClass(TSubclassOf<UCowCheatManagerExtension> CheatClass);
 	
 	/** Finds a previously registered cheat manager extension of the specified class */
 	UFUNCTION(BlueprintCallable, Category = "Extension", meta = (DisplayName = "Find Cheat Manager Extension"))

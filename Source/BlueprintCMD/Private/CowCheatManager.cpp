@@ -3,6 +3,8 @@
 
 #include "CowCheatManager.h"
 
+#include "Engine/AssetManager.h"
+#include "Engine/StreamableManager.h"
 #include "CowCheatManagerDeveloperSettings.h"
 #include "Misc/DataValidation.h"
 
@@ -262,7 +264,7 @@ void UCowCheatManager::Serialize(FArchive& Ar)
 	Super::Serialize(Ar);
 }
 
-void UCowCheatManager::BP_AddCheatManagerExtension(UCowCheatManagerExtension* CheatObject)
+void UCowCheatManager::CowAddCheatManagerExtension(UCowCheatManagerExtension* CheatObject)
 {
 	if (!IsValid(CheatObject))
 	{
@@ -272,7 +274,7 @@ void UCowCheatManager::BP_AddCheatManagerExtension(UCowCheatManagerExtension* Ch
 	AddCheatManagerExtension(CheatObject);
 }
 
-void UCowCheatManager::BP_RemoveCheatManagerExtension(UCowCheatManagerExtension* CheatObject)
+void UCowCheatManager::CowRemoveCheatManagerExtension(UCowCheatManagerExtension* CheatObject)
 {
 	if (!IsValid(CheatObject))
     {
@@ -282,17 +284,17 @@ void UCowCheatManager::BP_RemoveCheatManagerExtension(UCowCheatManagerExtension*
 	RemoveCheatManagerExtension(CheatObject);
 }
 
-void UCowCheatManager::BP_AddCheatManagerExtensionClass(TSubclassOf<UCowCheatManagerExtension> CheatClass)
+void UCowCheatManager::AddCheatManagerExtensionClass(TSubclassOf<UCowCheatManagerExtension> CheatClass)
 {
 	if (!IsValid(CheatClass))
 	{
 		return;
 	}
 	UCowCheatManagerExtension* NewExtension = NewObject<UCowCheatManagerExtension>(this, CheatClass);
-	BP_AddCheatManagerExtension(NewExtension);
+	CowAddCheatManagerExtension(NewExtension);
 }
 
-void UCowCheatManager::BP_RemoveCheatManagerExtensionClass(TSubclassOf<UCowCheatManagerExtension> CheatClass)
+void UCowCheatManager::RemoveCheatManagerExtensionClass(TSubclassOf<UCowCheatManagerExtension> CheatClass)
 {
 	if (!IsValid(CheatClass))
 	{
@@ -305,8 +307,29 @@ void UCowCheatManager::BP_RemoveCheatManagerExtensionClass(TSubclassOf<UCowCheat
 	});
 	if (CheatExtensionIdx != INDEX_NONE)
 	{
-		BP_RemoveCheatManagerExtension(Cast<UCowCheatManagerExtension>(CheatManagerExtensions[CheatExtensionIdx]));
+		CowRemoveCheatManagerExtension(Cast<UCowCheatManagerExtension>(CheatManagerExtensions[CheatExtensionIdx]));
 	}
+}
+
+void UCowCheatManager::AsyncAddCheatManagerExtensionSoftClass(TSoftClassPtr<UCowCheatManagerExtension> SoftCheatClass)
+{
+    TSubclassOf<UCowCheatManagerExtension> LoadedClass = SoftCheatClass.Get();
+    if (LoadedClass)
+    {
+        AddCheatManagerExtensionClass(LoadedClass);
+    }
+    else if (!SoftCheatClass.IsNull())
+    {
+        auto Delegate = FStreamableDelegate::CreateUObject(this, &UCowCheatManager::AsyncAddCheatManagerExtensionSoftClass, SoftCheatClass);
+
+        UAssetManager::Get().GetStreamableManager().RequestAsyncLoad({SoftCheatClass.ToSoftObjectPath()}, Delegate);
+    }
+}
+
+void UCowCheatManager::RemoveCheatManagerExtensionSoftClass(TSoftClassPtr<UCowCheatManagerExtension> CheatClass)
+{
+    // If our class isn't loaded it couldn't be among existing extensions and RemoveCheatManagerExtensionClass will early return
+    RemoveCheatManagerExtensionClass(CheatClass.Get());
 }
 
 UCheatManagerExtension* UCowCheatManager::BP_FindCheatManagerExtension(const UClass* InClass) const
