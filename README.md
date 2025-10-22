@@ -29,6 +29,7 @@ if you like the plugin and want to support & encourage me you can [buy me a coff
     UFUNCTION(Category = "Cheat|Gameplay")
     void CppCommand(float MyFloat);
   ```
+  However note that if you want to use C++ only `CowCheatManager` or `CowCheatManagerExtension` you'll still need to create an empty Blueprint class derived from them and use/add that one to your game. That's limitation is implied because reflection information required for auto-complete is available only in the editor build and that data is being serialized/baked into the asset. Native C++ classes don't do that naturally.
 
 # How to
 
