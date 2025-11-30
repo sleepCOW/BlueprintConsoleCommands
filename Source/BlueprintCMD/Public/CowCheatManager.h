@@ -1,4 +1,21 @@
-﻿// MIT Licencse
+﻿//   LICENSE: zlib/libpng
+//
+//   Copyright (c) 2024-2025 Oleksandr Ozerov (@sleepCOW)
+//
+//   This software is provided "as-is", without any express or implied warranty. In no event
+//   will the authors be held liable for any damages arising from the use of this software.
+//
+//   Permission is granted to anyone to use this software for any purpose, including commercial
+//   applications, and to alter it and redistribute it freely, subject to the following restrictions:
+//
+//     1. The origin of this software must not be misrepresented; you must not claim that you
+//     wrote the original software. If you use this software in a product, an acknowledgment
+//     in the product documentation would be appreciated but is not required.
+//
+//     2. Altered source versions must be plainly marked as such, and must not be misrepresented
+//     as being the original software.
+//
+//     3. This notice may not be removed or altered from any source distribution.
 
 #pragma once
 
@@ -9,13 +26,10 @@
 #include "CowCheatManager.generated.h"
 
 /**
- *  A cheat manager extensions can extend the main cheat manager in a modular way,
- *	being enabled or disabled when the system associated with the cheats is enabled or disabled
+ * A cheat manager extensions can extend the main cheat manager in a modular way,
+ * being enabled or disabled when the system associated with the cheats is enabled or disabled
  *
- *	See AddCheatManagerExtension and RemoveCheatManagerExtension
- *
- * Nice-to-have #TODO:
- * - Validate the function name doesn't overlap with UCowCheatManager
+ * See AddCheatManagerExtension and RemoveCheatManagerExtension
  */
 UCLASS()
 class COWCHEATMANAGER_API UCowCheatManagerExtension : public UCheatManagerExtension
@@ -39,25 +53,6 @@ public:
 };
 
 /**
- * #TODO list:
- * - Think about exposing autocomplete interface for the cheat manager, so commands like StartQuest could be made with autocomplete help
- * - Check whether CheatManagerExtensions being cut correctly in SHIPPED package
- * - When cheat manager class is created automatically make basic setup
- *		Example cheat command
- *		Comment block in event graph that say to look at ExampleCheatCommand and how to disable those default functions being created
- *		Comment block in ExampleCheatCommand that asks to fill description and says the category is all you need and I recommend to rename it to project name it's cool and intuitive
- *		Option to disable those helpers
- * - Add Icon
- * - Check Gameplay Tags are supported as param of command
- * 
- * - Add description of how to use
- *		Write docs on github
- * - Check C++ cheat commands can be created and work the same way as blueprint ones
- * - Check C++ cheat manager extensions could be created and work the same way as blueprint ones
- *
- * BUGS:
- * - UMainCheatManagerExtension::CppExtension isn't available in packaged game, debug cooking
- *
  * Features:
  *
  * - Simple to use blueprint console commands
@@ -68,9 +63,8 @@ public:
  *		Versions AddCheatManagerExtensionClass and RemoveCheatManagerExtensionClass as QoL for easier setup
  * - Works in the editor and in the builds (Excluding SHIPPING)
  *
- * Nice-to-have #TODO:
- * - When CheatCategoryPrefix is changed automatically rename category in the function and event graph for event commands
- * - Add support for commands in event graph
+ * #TODO list:
+ * - Think about exposing autocomplete interface for the cheat manager, so commands like StartQuest could be made with autocomplete help
  */
 UCLASS()
 class COWCHEATMANAGER_API UCowCheatManager : public UCheatManager
@@ -79,6 +73,7 @@ class COWCHEATMANAGER_API UCowCheatManager : public UCheatManager
 
     // Cow prefix is used to avoid name conflicts with non-virtual methods of UCheatManager
 public:
+
 	/** Registers a pre-created cheat manager extension with this cheat manager */
 	UFUNCTION(BlueprintCallable, Category = "Extension", meta = (DisplayName = "Add Cheat Manager Extension"))
 	void CowAddCheatManagerExtension(UCowCheatManagerExtension* CheatObject);
@@ -118,6 +113,7 @@ public:
 	virtual bool ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObject* Executor) override;
 	virtual void Serialize(FArchive& Ar) override;
 #if WITH_EDITOR
+
 	/**
 	 * 
 	 * @param InClass class for which generate executable cheat manager commands
