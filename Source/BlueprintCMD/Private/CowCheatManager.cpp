@@ -23,6 +23,7 @@
 #include "Engine/AssetManager.h"
 #include "Engine/StreamableManager.h"
 #include "CowCheatManagerDeveloperSettings.h"
+#include "Runtime/Launch/Resources/Version.h"
 #include "Misc/DataValidation.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogCowCheatManager, Log, All);
@@ -35,7 +36,7 @@ static FORCEINLINE bool IsArrayEmpty(const TArray<FString>& InArray)
 {
 #if ENGINE_MAJOR_VERSION == 4
 	return InArray.Num() == 0;
-#elif ENGINE_MAJOR_VERSION == 5
+#else ENGINE_MAJOR_VERSION == 5
 	return InArray.IsEmpty();
 #endif
 }

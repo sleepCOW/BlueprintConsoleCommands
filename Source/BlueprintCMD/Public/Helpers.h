@@ -22,6 +22,8 @@
 #include "CoreMinimal.h"
 #include "ConsoleSettings.h"
 #include "Engine/Console.h"
+#include "Engine/Engine.h"
+#include "Engine/GameViewportClient.h"
 #include "Helpers.generated.h"
 
 USTRUCT()
