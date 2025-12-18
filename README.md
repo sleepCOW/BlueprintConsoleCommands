@@ -9,7 +9,7 @@
 
 An Unreal Engine plugin that provides an easy way to implement console commands in blueprints through custom `CheatManager` and `CheatManagerExtension` classes
 
-if you like the plugin and want to support & encourage me you can [buy me a coffee](https://ko-fi.com/sleepcow1) or purchase `Professional` license on Fab `LINK`
+if you like the plugin and want to support & encourage me you can [buy me a coffee](https://ko-fi.com/sleepcow1) or purchase `Professional` license on Fab `LINK` (NOTE: Fab version is distributed with Fab Standart license!)
 
 # Features
 
