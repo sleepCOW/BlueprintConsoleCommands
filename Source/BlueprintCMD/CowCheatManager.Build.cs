@@ -1,5 +1,3 @@
-// MIT License
-
 using UnrealBuildTool;
 
 public class CowCheatManager : ModuleRules
