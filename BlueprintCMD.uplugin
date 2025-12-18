@@ -10,6 +10,7 @@
 	"DocsURL": "https://github.com/sleepCOW/BlueprintConsoleCommands",
 	"MarketplaceURL": "",
 	"SupportURL": "",
+	"FabURL": "com.epicgames.launcher://ue/Fab/product/81e687cc-3286-49af-a770-763f8867d774",
 	"CanContainContent": false,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
@@ -18,12 +19,21 @@
 		{
 			"Name": "CowCheatManager",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformDenyList" : [
+				"IOS",
+				"Android"
+			]
 		},
 		{
 			"Name": "CowCheatManagerEditor",
 			"Type": "Editor",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Linux",
+				"Mac"
+			]
 		}
 	]
 }
