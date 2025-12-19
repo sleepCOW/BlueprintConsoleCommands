@@ -1,3 +1,5 @@
+// Copyright 2025, Oleksandr 'sleepCOW' Ozerov
+
 using UnrealBuildTool;
 
 public class CowCheatManager : ModuleRules

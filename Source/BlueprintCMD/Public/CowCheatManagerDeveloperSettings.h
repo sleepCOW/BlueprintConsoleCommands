@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿// Copyright 2025, Oleksandr 'sleepCOW' Ozerov
+
+#pragma once
 
 #include "CoreMinimal.h"
 #include "Engine/DeveloperSettings.h"

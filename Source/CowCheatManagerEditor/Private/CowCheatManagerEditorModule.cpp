@@ -1,4 +1,6 @@
-﻿#include "CowCheatManagerEditorModule.h"
+﻿// Copyright 2025, Oleksandr 'sleepCOW' Ozerov
+
+#include "CowCheatManagerEditorModule.h"
 
 #include "CowCheatManagerDeveloperSettings.h"
 #include "EdGraphNode_Comment.h"

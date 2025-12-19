@@ -16,6 +16,8 @@
 //     as being the original software.
 //
 //     3. This notice may not be removed or altered from any source distribution.
+// Copyright 2025, Oleksandr 'sleepCOW' Ozerov
+
 #pragma once
 
 #include "CoreMinimal.h"

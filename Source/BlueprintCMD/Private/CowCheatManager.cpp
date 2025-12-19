@@ -1,4 +1,6 @@
-﻿#include "CowCheatManager.h"
+﻿// Copyright 2025, Oleksandr 'sleepCOW' Ozerov
+
+#include "CowCheatManager.h"
 
 #include "Engine/AssetManager.h"
 #include "Engine/StreamableManager.h"
