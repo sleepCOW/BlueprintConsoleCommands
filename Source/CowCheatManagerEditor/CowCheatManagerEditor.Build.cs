@@ -1,4 +1,4 @@
-// MIT License
+// Copyright 2025, Oleksandr 'sleepCOW' Ozerov
 
 using UnrealBuildTool;
 
