@@ -16,10 +16,10 @@ static int32 NumAutoCompletesRegistered = 0;
 
 static FORCEINLINE bool IsArrayEmpty(const TArray<FString>& InArray)
 {
-#if ENGINE_MAJOR_VERSION == 4
-	return InArray.Num() == 0;
-#else ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION >= 5
 	return InArray.IsEmpty();
+#else
+	return InArray.Num() == 0;
 #endif
 }
 
