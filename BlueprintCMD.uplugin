@@ -11,6 +11,7 @@
 	"MarketplaceURL": "",
 	"SupportURL": "",
 	"FabURL": "com.epicgames.launcher://ue/Fab/product/81e687cc-3286-49af-a770-763f8867d774",
+	"EngineVersion": "5.7.0",
 	"CanContainContent": false,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
@@ -20,7 +21,7 @@
 			"Name": "CowCheatManager",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
-			"PlatformDenyList" : [
+			"PlatformDenyList": [
 				"IOS",
 				"Android"
 			]

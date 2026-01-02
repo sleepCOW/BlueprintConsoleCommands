@@ -1,0 +1,1 @@
+"S:\UE_5.7\Engine\Build\BatchFiles\RunUAT.bat" BuildPlugin -Plugin="%~dp0\BlueprintCMD.uplugin" -Package="S:\CheatManagerTest\5_7" -Rocket
