@@ -4,7 +4,7 @@
 
 #include "CowCheatManagerDeveloperSettings.h"
 #include "EdGraphNode_Comment.h"
-#include "BlueprintCMD/Public/CowCheatManager.h"
+#include "CowCheatManager.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "Kismet2/KismetEditorUtilities.h"
 #include "Interfaces/IPluginManager.h"
