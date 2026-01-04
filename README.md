@@ -9,7 +9,7 @@
 
 An Unreal Engine plugin that provides an easy way to implement console commands in blueprints through custom `CheatManager` and `CheatManagerExtension` classes
 
-if you like the plugin and want to support & encourage me you can [buy me a coffee](https://ko-fi.com/sleepcow1) or purchase `Professional` license on Fab `LINK` (NOTE: Fab version is distributed with Fab Standart license!)
+if you like the plugin and want to support & encourage me you can [buy me a coffee](https://ko-fi.com/sleepcow1) or purchase `Professional` license on [Fab](https://www.fab.com/listings/81e687cc-3286-49af-a770-763f8867d774) (NOTE: Fab version is distributed with Fab Standart license!)
 
 # Features
 
@@ -37,7 +37,7 @@ if you like the plugin and want to support & encourage me you can [buy me a coff
 ## Getting started
 
 You should know how to do it but if for whatever reason you dont, you can use following options:
-- Download via `Fab` (for precompiled binaries, most suitable if you have Blueprints only project), [Unreal Engine Plugin documentation if you need info on how to enable the plugin](https://dev.epicgames.com/documentation/en-us/unreal-engine/working-with-plugins-in-unreal-engine)
+- Download via [`Fab`](https://www.fab.com/listings/81e687cc-3286-49af-a770-763f8867d774) (for precompiled binaries, most suitable if you have Blueprints only project), [Unreal Engine Plugin documentation if you need info on how to enable the plugin](https://dev.epicgames.com/documentation/en-us/unreal-engine/working-with-plugins-in-unreal-engine)
 - Download source into `ProjectName/Plugins/BlueprintConsoleCommands` and build the project.
 
 ## How to create a console command
